@@ -20,7 +20,7 @@ const Login = () => {
 
 const onSubmit = async (e)=>{
   e.preventDefault();
-  const response = await axios.post("http://localhost:3000/user/login",data);
+  const response = await axios.post("https://chat-app-rszy.onrender.com/user/login",data);
   if(response.data.success){
     setToken(response.data.token);
     setAuthUser(response.data.user)
