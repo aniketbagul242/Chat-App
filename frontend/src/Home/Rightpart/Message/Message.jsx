@@ -20,7 +20,7 @@ const Message = () => {
       setLoading(true)
       if (selectedConversation && selectedConversation._id) {
         try {
-          const response = await axios.get(`http://localhost:3000/api/message/get/${selectedConversation._id}`, { headers: { token } })
+          const response = await axios.get(`https://chat-app-rszy.onrender.com/api/message/get/${selectedConversation._id}`, { headers: { token } })
           console.log(response.data.message);
 
           if (response.data.success) {
