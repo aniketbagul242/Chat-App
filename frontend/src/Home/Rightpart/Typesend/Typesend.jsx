@@ -17,7 +17,7 @@ const Typesend = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:3000/api/message/send/${selectedConversation._id}`, { message }, { headers: { token } })
+      const response = await axios.post(`https://chat-app-rszy.onrender.com/api/message/send/${selectedConversation._id}`, { message }, { headers: { token } })
 
       if (response.data.success) {
         console.log(response.data.message);
