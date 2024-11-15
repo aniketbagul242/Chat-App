@@ -24,7 +24,7 @@ const {setToken} = useContext(StoreContext);
 
   const onSubmit = async (e)=>{
   e.preventDefault();
-  const response = await axios.post("http://localhost:3000/user/signup",data)
+  const response = await axios.post("https://chat-app-rszy.onrender.com/user/signup",data)
   if(response.data.success){
      setToken(response.data.token)
      localStorage.setItem("token",response.data.token)
