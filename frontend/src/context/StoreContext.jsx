@@ -6,6 +6,8 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [token, setToken] = useState("");
+  const [alluser, setAlluser] = useState([]);
+
 
   const intialState = localStorage.getItem("user");
   const [authuser, setAuthUser] = useState(intialState ? JSON.parse(intialState) : undefined)
@@ -28,6 +30,8 @@ const StoreContextProvider = (props) => {
     setMessages,
     show,
     SetShow,
+    alluser,
+    setAlluser
   }
 
   return (

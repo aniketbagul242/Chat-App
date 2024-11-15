@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <>
-      <div className='bg-slate-700  '>
+      <div className='bg-slate-700 max-h-screen '>
         <Routes>
           <Route path='/' element={authuser ? <div className='flex h-screen'>
             {show ? <Left /> : <></>}

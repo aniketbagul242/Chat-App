@@ -4,7 +4,7 @@ import { StoreContext } from '../../../context/StoreContext'
 
 const Typesend = () => {
   const [loading, setLoading] = useState(false)
-  const { messages, setMessages, selectedConversation } = useContext(StoreContext);
+  const { messages, setMessages, selectedConversation, SetShow } = useContext(StoreContext);
 
   const [message, setMsg] = useState("")
   const token = localStorage.getItem("token")
@@ -34,13 +34,18 @@ const Typesend = () => {
     }
   }
 
+  const handleClick = () => {
+    if (window.innerWidth < 500) {
+      SetShow(false)
+    }
+  };
 
 
   return (
     <form onSubmit={sendMessage}>
       <div className='flex items-center ml-3 h-[8vh] '>
         <div className='w-[65%] ' >
-          <input onChange={onChange} className=' pt-2 pb-2 rounded w-full  text-black outline-none pl-10' type="text" placeholder='Type here' value={message} />
+          <input onClick={handleClick} onChange={onChange} className= ' pt-2 pb-2 rounded w-full  text-black outline-none pl-10 ' type="text" placeholder='Type here' value={message} />
         </div>
         <div>
           <button type='submit'> <img className='w-20' src="send.png" alt="" /></button>
