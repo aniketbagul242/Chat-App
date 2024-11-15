@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Users from '../RegisterUser/Users'
 import axios from 'axios';
+import { StoreContext } from '../../../context/StoreContext';
 
 
 const User = () => {
 
   const token = localStorage.getItem("token");
-
-  const [alluser, setAlluser] = useState([]);
-  const [loading, setLoading] = useState(false)
-
+  const {alluser,setAlluser} = useContext(StoreContext)
+  
   useEffect(() => {
     // getting all user from database
-
     const getAlluser = async () => {
 
       try {

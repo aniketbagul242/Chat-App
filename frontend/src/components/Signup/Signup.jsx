@@ -41,7 +41,7 @@ const {setToken} = useContext(StoreContext);
     <>
       <form onSubmit={onSubmit} >
         <div className='bg-slate-900 h-screen flex items-center justify-center'>
-          <div className='text-white bg-slate-600 w-[90%] h-3/5 rounded-md sm:w-[50%] xl:w-[25%] border border-gray-500'>
+          <div className='text-white bg-slate-600 w-[90%] rounded-md sm:w-[50%] xl:w-[25%] border border-gray-500 max-h-[60%]  '>
             <h1 className='text-2xl font-bold pl-32 pt-3'>ChatApp</h1>
             <h1 className='text-xl font-semibold pl-2 pt-2'>Register</h1>
             <div className='flex justify-center mt-5'>
