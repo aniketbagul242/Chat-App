@@ -18,8 +18,6 @@ const Login = () => {
 
 const onSubmit = async (e)=>{
   e.preventDefault();
-  setLoginload(true)
-  
   const response = await axios.post("https://chat-app-rszy.onrender.com/user/login",data);
 
   if(response.data.success){
@@ -27,7 +25,7 @@ const onSubmit = async (e)=>{
     setAuthUser(response.data.user)
     localStorage.setItem("token", response.data.token)
     localStorage.setItem("user",JSON.stringify(response.data.user))
-    setLoginload(false)
+  
   }
   else{
     alert(response.data.message)
