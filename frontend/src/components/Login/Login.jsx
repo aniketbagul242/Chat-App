@@ -5,8 +5,6 @@ import {Link} from "react-router-dom";
 
 const Login = () => {
   const {setToken, setAuthUser } = useContext(StoreContext)
-  
-
   const [data,setData]= useState({
     email:"",
     password:""
@@ -20,12 +18,16 @@ const Login = () => {
 
 const onSubmit = async (e)=>{
   e.preventDefault();
+  setLoginload(true)
+  
   const response = await axios.post("https://chat-app-rszy.onrender.com/user/login",data);
+
   if(response.data.success){
     setToken(response.data.token);
     setAuthUser(response.data.user)
     localStorage.setItem("token", response.data.token)
     localStorage.setItem("user",JSON.stringify(response.data.user))
+    setLoginload(false)
   }
   else{
     alert(response.data.message)
@@ -57,6 +59,7 @@ const onSubmit = async (e)=>{
     </div>
     
     </div>
+    
     </form>
 </>
   )
