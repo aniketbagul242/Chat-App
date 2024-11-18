@@ -13,7 +13,7 @@ const Right = () => {
 
     !selectedConversation ? <Nochat /> :
 
-      <div className={`${show ? "sm:w-[70%] " : "w-full"} border border-white bg-slate-700 text-white `} >
+      <div className={`${show ? "sm:w-[70%] " : "w-full"} border border-white bg-slate-700 text-white`} >
         <Chatuser />:
         <div className='flex-1 overflow-y-auto' style={{ maxHeight: "calc(88vh - 8vh)" }} >
           <Message />

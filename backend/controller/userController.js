@@ -82,7 +82,7 @@ const Login = async(req,res)=>{
 }
 
 
-    // fetch user
+    // fetch users
 const fetchUser = async (req,res)=>{
   try{  
 

@@ -5,14 +5,13 @@ import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
 import { StoreContext } from './context/StoreContext'
 import { Routes, Route, Navigate } from "react-router-dom"
-import Nochat from './Home/Rightpart/Nochat/Nochat'
 
 
 
 
 const App = () => {
 
-  const { authuser, show, SetShow } = useContext(StoreContext)
+  const { authuser, show } = useContext(StoreContext)
 
 
 
