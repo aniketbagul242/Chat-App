@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from "axios"
 import { StoreContext } from '../../context/StoreContext';
 import {Link} from "react-router-dom";
+import { toast } from 'react-toastify'
 
 const Signup = () => {
    
@@ -30,6 +31,7 @@ const {setToken} = useContext(StoreContext);
      localStorage.setItem("token",response.data.token)
      localStorage.setItem("user",JSON.stringify(response.data.user))
      window.location.reload();
+     toast.success("Signup Successful")
   }
   else{
     alert(response.data.message)

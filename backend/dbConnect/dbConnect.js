@@ -1,9 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose from "mongoose";
-import dotenv from "dotenv"
 
-dotenv.config()
-
-const URL = process.env.MONGODB_URI;
+const URL = process.env.MONGODB_URI
 
 const dbConnect = async ()=>{
   
@@ -18,3 +17,5 @@ const dbConnect = async ()=>{
 }
 
 export default dbConnect;
+
+

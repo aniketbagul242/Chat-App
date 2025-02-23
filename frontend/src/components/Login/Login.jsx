@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from "axios"
 import { StoreContext } from '../../context/StoreContext'
 import {Link} from "react-router-dom";
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const {setToken, setAuthUser } = useContext(StoreContext)
@@ -25,6 +26,7 @@ const onSubmit = async (e)=>{
     setAuthUser(response.data.user)
     localStorage.setItem("token", response.data.token)
     localStorage.setItem("user",JSON.stringify(response.data.user))
+    toast.success("Login Successful")
   
   }
   else{
