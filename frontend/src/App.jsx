@@ -5,6 +5,8 @@ import Signup from './components/Signup/Signup'
 import Login from './components/Login/Login'
 import { StoreContext } from './context/StoreContext'
 import { Routes, Route, Navigate } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -17,7 +19,9 @@ const App = () => {
 
   return (
     <>
+          <ToastContainer />
       <div className='bg-slate-700 max-h-screen '>
+
         <Routes>
           <Route path='/' element={authuser ? <div className='flex h-screen'>
             {show ? <Left /> : <></>}

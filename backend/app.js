@@ -1,5 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
-import dotenv from "dotenv"
 import cors from "cors";
 import dbConnect from "./dbConnect/dbConnect.js"
 import userRouter from "./routes/userRoutes.js";
@@ -7,7 +8,6 @@ import messageRouter from "./routes/messageRoutes.js";
 import { app, server } from "./socketIO/server.js";
 
 
-dotenv.config();
 const PORT = process.env.PORT
 
 // middleware
