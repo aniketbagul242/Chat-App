@@ -1,71 +1,100 @@
 import React, { useContext, useState } from 'react'
 import axios from "axios"
 import { StoreContext } from '../../context/StoreContext';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from 'react-toastify'
 
 const Signup = () => {
-   
-const {setToken} = useContext(StoreContext);
-
+  const { setToken, url } = useContext(StoreContext);
 
   const [data, setData] = useState({
     fullname: "",
     email: "",
     password: "",
     confirmPassword: ""
-});
-
+  });
 
   const OnChangeHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData((data)=>({...data,[name]:value}))
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const onSubmit = async (e)=>{
-  e.preventDefault();
-  const response = await axios.post("https://chat-app-rszy.onrender.com/user/signup",data)
-  if(response.data.success){
-     setToken(response.data.token)
-     localStorage.setItem("token",response.data.token)
-     localStorage.setItem("user",JSON.stringify(response.data.user))
-     window.location.reload();
-     toast.success("Signup Successful")
-  }
-  else{
-    alert(response.data.message)
-  }
-
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${url}/user/signup`, data);
+      if (response.data.success) {
+        setToken(response.data.token)
+        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("user", JSON.stringify(response.data.user))
+        toast.success("Signup Successful")
+        window.location.reload();
+      } else {
+        toast.error(response.data.message)
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again!")
+      console.error(error)
+    }
   }
 
   return (
+    <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 to-teal-600'>
+      <form onSubmit={onSubmit} className='bg-gray-900 shadow-2xl rounded-xl w-[90%] sm:w-[400px] p-8 flex flex-col'>
+        <h1 className='text-3xl font-bold text-white text-center mb-2'>ChatApp</h1>
+        <p className='text-gray-300 text-center mb-6'>Create your account</p>
 
-    <>
-      <form onSubmit={onSubmit} >
-        <div className='bg-slate-900 h-screen flex items-center justify-center'>
-          <div className='text-white bg-slate-600 w-[90%] rounded-md sm:w-[50%] xl:w-[25%] border border-gray-500 max-h-[60%]  '>
-            <h1 className='text-2xl font-bold pl-32 pt-3'>ChatApp</h1>
-            <h1 className='text-xl font-semibold pl-2 pt-2'>Register</h1>
-            <div className='flex justify-center mt-5'>
-              <div className='flex flex-col gap-y-6 w-[70%]  '>
-                <input className=' rounded bg-slate-900 outline-none border border-gray-700 h-10 ' name='fullname' value={data.fullname} required onChange={OnChangeHandler} type="text" placeholder='Fullname' />
-                <input className=' rounded bg-slate-900 outline-none border border-gray-700 h-10 ' name='email' value={data.email} required onChange={OnChangeHandler} type="text" placeholder='Email' />
-                <input className=' rounded bg-slate-900 outline-none border border-gray-700 h-10 ' name='password' value={data.password} required onChange={OnChangeHandler} type="text" placeholder='Password' />
-                <input className=' rounded bg-slate-900 outline-none border border-gray-700 h-10 ' name='confirmPassword' value={data.confirmPassword} required onChange={OnChangeHandler} type="text" placeholder='Confirm Password' />
-              </div>
-            </div>
-            <div className='flex justify-center mt-3'>
-              <p >Have an account? <Link to="/login"><span className='text-blue-400 cursor-pointer'>Login </span> </Link>  </p>
-            </div>
-            <div className='flex justify-center mt-3'>
-              <button className='bg-blue-600 pl-3 pr-3 pt-1 pb-1 text-white rounded font-medium hover:bg-blue-500' type='submit'>Signup</button>
-            </div>
-          </div>
-
+        <div className='flex flex-col gap-4'>
+          <input
+            type="text"
+            name="fullname"
+            value={data.fullname}
+            onChange={OnChangeHandler}
+            placeholder='Fullname'
+            required
+            className='bg-gray-800 text-white rounded-md px-4 py-2 outline-none border border-gray-600 focus:border-teal-400 focus:ring focus:ring-teal-300 transition duration-300'
+          />
+          <input
+            type="text"
+            name="email"
+            value={data.email}
+            onChange={OnChangeHandler}
+            placeholder='Email'
+            required
+            className='bg-gray-800 text-white rounded-md px-4 py-2 outline-none border border-gray-600 focus:border-teal-400 focus:ring focus:ring-teal-300 transition duration-300'
+          />
+          <input
+            type="password"
+            name="password"
+            value={data.password}
+            onChange={OnChangeHandler}
+            placeholder='Password'
+            required
+            className='bg-gray-800 text-white rounded-md px-4 py-2 outline-none border border-gray-600 focus:border-teal-400 focus:ring focus:ring-teal-300 transition duration-300'
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            value={data.confirmPassword}
+            onChange={OnChangeHandler}
+            placeholder='Confirm Password'
+            required
+            className='bg-gray-800 text-white rounded-md px-4 py-2 outline-none border border-gray-600 focus:border-teal-400 focus:ring focus:ring-teal-300 transition duration-300'
+          />
         </div>
+
+        <p className='text-gray-400 text-sm mt-4 text-center'>
+          Have an account? <Link to="/login" className='text-teal-400 hover:underline'>Login</Link>
+        </p>
+
+        <button
+          type='submit'
+          className='mt-6 w-full bg-teal-500 hover:bg-teal-400 text-white font-semibold py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg'
+        >
+          Signup
+        </button>
       </form>
-    </>
+    </div>
   )
 }
 

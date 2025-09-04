@@ -4,44 +4,77 @@ import http from "http";
 
 const app = express();
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:5173",
-        methods: ["GET", "POST"],
-    }
-})
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
 
-// real time messaging
-export const getReceiverScoketId = (receiverId)=>{
-    return users[receiverId]
-}
+const users = {};
 
+// helper function to get receiver socket id
+export const getReceiverSocketId = (receiverId) => {
+  return users[receiverId];
+};
 
-const users = {}
 // used to listen events on server side
-  io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
 
-    // getting userId from frontend
-    const userId = socket.handshake.query.userId
-    if(userId){
-        users[userId]=socket.id
-        console.log("Hello",users);
-        
+  // getting userId from frontend
+  const userId = socket.handshake.query.userId;
+  if (userId) {
+    users[userId] = socket.id;
+    console.log("Current users:", users);
+  }
+
+  // notify all clients about online users
+  io.emit("getOnlineUser", Object.keys(users));
+
+  // ==============================
+  // 📌 1. Typing indicators
+  // ==============================
+  socket.on("typing", ({ senderId, receiverId }) => {
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("typing", { senderId });
     }
-   // used to send the event all to all connected users
-    io.emit("getOnlineUser",Object.keys(users))
+  });
 
-    // used to listen client side events emmited by server side
-    // used in both server and client
-    socket.on("disconnected", (socket) => {
-        console.log("a user disconnected", socket.id);
-    delete users[userId]
-     io.emit("getOnlineUser",Object.keys(users))
-    })
+  socket.on("stopTyping", ({ senderId, receiverId }) => {
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("stopTyping", { senderId });
+    }
+  });
 
-})
+  // ==============================
+  // 📌 2. Instant notifications (new message)
+  // ==============================
+  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    const receiverSocketId = getReceiverSocketId(receiverId);
 
-export{io,app,server}
+    // here you can also save the message to DB before emitting
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", {
+        senderId,
+        text,
+      });
+    }
+  });
 
+  // ==============================
+  // 📌 Disconnect
+  // ==============================
+  socket.on("disconnect", () => {
+    console.log("a user disconnected", socket.id);
+    if (userId) {
+      delete users[userId];
+      io.emit("getOnlineUser", Object.keys(users));
+    }
+  });
+});
+
+export { io, app, server };
