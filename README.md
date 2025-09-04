@@ -27,17 +27,3 @@ A **real-time chat application** built with **MERN stack** and **Socket.IO** tha
 - **Authentication:** JWT (JSON Web Tokens)
 
 ---
-Folder Structure:
-Chat-App/
-├── backend/         # Backend server
-│   ├── controller/
-│   ├── models/
-│   ├── routes/
-│   └── socketIO/
-├── frontend/        # React frontend
-│   ├── src/
-│   ├── components/
-│   ├── context/
-│   └── pages/
-├── README.md
-└── package.json
