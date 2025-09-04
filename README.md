@@ -27,3 +27,4 @@ A **real-time chat application** built with **MERN stack** and **Socket.IO** tha
 - **Authentication:** JWT (JSON Web Tokens)
 
 ---
+Live Demo - https://chat-app-m3yu.onrender.com/signup
