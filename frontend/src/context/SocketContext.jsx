@@ -12,6 +12,7 @@ const SocketContextProvider = ({ children }) => {
     incrementUnread,
     resetUnread,
     moveToTop,
+    url,
   } = useContext(StoreContext);
 
   const [socket, setSocket] = useState(null);
@@ -21,7 +22,7 @@ const SocketContextProvider = ({ children }) => {
   useEffect(() => {
     if (!authuser) return;
 
-    const socketInstance = io("http://localhost:3000", {
+    const socketInstance = io(url, {
       query: { userId: authuser._id },
     });
 
@@ -61,3 +62,4 @@ const SocketContextProvider = ({ children }) => {
 };
 
 export default SocketContextProvider;
+
