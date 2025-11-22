@@ -17,11 +17,13 @@ app.use(cors());
 // db connection
 dbConnect();
 
-
 // api endpoint
 app.use("/user", userRouter)
 app.use("/api/message",messageRouter)
 
+app.get("/", (req, res) => {
+    res.send("API Working")
+})
 
 server.listen(PORT, ()=>{
     console.log(`Server is running on ${PORT}`);
